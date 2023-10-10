@@ -2,6 +2,7 @@ package com.microservice.user.service.services.implementation;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User saveUser(User user) {
 		// TODO Auto-generated method stub
+		String id = UUID.randomUUID().toString();
+		user.setUserId(id);
 		return userRepo.save(user);
 	}
 
