@@ -35,6 +35,8 @@ public class User {
 	@Column(name="ABOUT")
 	private String about;
 	
+	// get this data from Rating microservice, therefore
+	// not stored in the users database
 	@Transient
 	private List<Rating> ratings;
 	
