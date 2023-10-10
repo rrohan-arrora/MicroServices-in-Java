@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.hotel.service.HotelService.entities.Hotel;
 import com.hotel.service.HotelService.repositories.HotelRepository;
 import com.hotel.service.HotelService.services.HotelService;
 
+@Service
 public class HotelServiceImpl implements HotelService {
 	
 	@Autowired
