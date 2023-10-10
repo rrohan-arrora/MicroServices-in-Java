@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Optional<User> getUser(String userId) {
 		// TODO Auto-generated method stub
-		return userRepo.findById(userId);//.orElseThrow(() -> new ResourceNotFoundException("User with given id is not found on server !! : " + userId));
+		Optional<User> user =  userRepo.findById(userId);
+		return user;
 	}
 
 }
