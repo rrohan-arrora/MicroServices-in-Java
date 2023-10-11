@@ -1,16 +1,19 @@
 package com.microservice.user.service.services.implementation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.microservice.user.service.entities.Hotel;
 import com.microservice.user.service.entities.Rating;
 import com.microservice.user.service.entities.User;
 import com.microservice.user.service.repositories.UserRepository;
@@ -47,10 +50,24 @@ public class UserServiceImpl implements UserService {
 		User user =  userRepo.findById(userId).orElseThrow();
 		
 		// fetch ratings of the above user from RATING SERVICE
-		ArrayList<Rating> userRatings = restTemplate.getForObject("http://localhost:8083/ratings/users/"+user.getUserId(), ArrayList.class);
-		logger.info("{} ", userRatings);
+		Rating[] userRatings = restTemplate.getForObject("http://localhost:8083/ratings/users/"+user.getUserId(), Rating[].class);
+//		logger.info("{} ", userRatings);
 		
-		user.setRatings(userRatings);
+		List<Rating> ratings = Arrays.stream(userRatings).toList();
+		
+		for(Rating rate: ratings) {
+			// api call to hotel service to get the hotel of the rating
+			ResponseEntity<Hotel> forEntity= restTemplate.getForEntity("http://localhost:8082/hotels/"+rate.getHotelId(), Hotel.class);			
+			Hotel hotel = forEntity.getBody();
+			
+//			logger.info("{} ", hotel.getId());
+			
+			hotel.setId(rate.getHotelId());
+			
+			rate.setHotel(hotel);
+		}
+		
+		user.setRatings(ratings);
 		
 		
 		return user;
