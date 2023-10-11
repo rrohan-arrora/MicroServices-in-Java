@@ -1,6 +1,8 @@
 package com.micro.service.RatingService.entities;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -14,7 +16,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Document("user_ratings")
 public class Rating {
-    @Id
+	
+	@MongoId(value = FieldType.OBJECT_ID)
     private String ratingId;
    
     private String userId;
