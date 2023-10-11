@@ -1,7 +1,6 @@
 package com.microservice.user.service.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.microservice.user.service.entities.User;
 
@@ -14,7 +13,7 @@ public interface UserService {
 	List<User> getAllUsers();
 	
 	//get single User
-	Optional<User> getUser(String userId);
+	User getUser(String userId);
 	
 
 }

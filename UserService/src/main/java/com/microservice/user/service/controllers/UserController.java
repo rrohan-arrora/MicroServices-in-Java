@@ -1,7 +1,6 @@
 package com.microservice.user.service.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,8 +33,8 @@ public class UserController {
 	
 	// get a user
 	@GetMapping("/{userId}")
-	public ResponseEntity<Optional<User>> getSingleUser(@PathVariable String userId){
-		Optional<User> user = userService.getUser(userId);
+	public ResponseEntity<User> getSingleUser(@PathVariable String userId){
+		User user = userService.getUser(userId);
         return ResponseEntity.ok(user);
 	}
 	
