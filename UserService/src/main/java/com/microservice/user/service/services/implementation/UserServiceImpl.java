@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import com.microservice.user.service.entities.Hotel;
 import com.microservice.user.service.entities.Rating;
 import com.microservice.user.service.entities.User;
+import com.microservice.user.service.feign.HotelService;
 import com.microservice.user.service.repositories.UserRepository;
 import com.microservice.user.service.services.UserService;
 
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	private HotelService hotelService;
 	
 	private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -57,8 +61,10 @@ public class UserServiceImpl implements UserService {
 		
 		for(Rating rate: ratings) {
 			// api call to hotel service to get the hotel of the rating
-			ResponseEntity<Hotel> forEntity= restTemplate.getForEntity("http://HOTEL-SERVICE/hotels/"+rate.getHotelId(), Hotel.class);			
-			Hotel hotel = forEntity.getBody();
+//			ResponseEntity<Hotel> forEntity= restTemplate.getForEntity("http://HOTEL-SERVICE/hotels/"+rate.getHotelId(), Hotel.class);	
+//			Hotel hotel = forEntity.getBody();
+			
+			Hotel hotel = hotelService.getHotel(rate.getHotelId());
 			
 //			logger.info("{} ", hotel.getId());
 			

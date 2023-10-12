@@ -31,7 +31,7 @@ public class HotelController {
 
     //get single
     @GetMapping("/{hotelId}")
-    public ResponseEntity<Optional<Hotel>> createHotel(@PathVariable String hotelId) {
+    public ResponseEntity<Optional<Hotel>> getHotel(@PathVariable String hotelId) {
         return ResponseEntity.status(HttpStatus.OK).body(hotelService.getSingleHotel(hotelId));
     }
 
